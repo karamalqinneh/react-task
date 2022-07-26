@@ -35,6 +35,7 @@ const Main = (props) => {
   let [filteredResults, setFilteredResults] = useState([]);
   let [dataLength, setDataLength] = useState(0);
   let [data, setData] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       let response = await axios.get(process.env.REACT_APP_ENDPOINT);
@@ -44,6 +45,13 @@ const Main = (props) => {
     };
     fetchData();
   }, []);
+  const sortResults = (sortParam) => {
+    setFilteredResults(
+      filteredResults.sort((a, b) => {
+        return b[sortParam] - a[sortParam];
+      })
+    );
+  };
   useEffect(() => {
     let res = filteredResults;
     if (Object.keys(props.applyFilter).length) {
@@ -59,11 +67,12 @@ const Main = (props) => {
       let endDate = props.applyFilter.endDate
         ? new Date(props.applyFilter.endDate)
         : null;
+
       if (startDate && endDate) {
-        console.log(res);
         res = res.filter((ele) => {
-          console.log("T");
           let date = new Date(ele.creationTimestamp.slice(0, 10));
+          console.log(startDate, "start");
+          console.log(date, "date");
           return startDate >= date && endDate <= date;
         });
       } else if (startDate) {
@@ -131,7 +140,7 @@ const Main = (props) => {
 
   return (
     <>
-      <Table data={data} />
+      <Table data={data} sortResults={sortResults} />
       <IndexList ref={indexRef} onClick={classesHandler}>
         {indices}
       </IndexList>

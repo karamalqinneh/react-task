@@ -45,6 +45,12 @@ const FilterForm = (props) => {
     };
 
     props.getData(output);
+    employeeNameRef.current.value = "";
+    startDateRef.current.value = "";
+    endDateRef.current.value = "";
+    actionTypeRef.current.value = "";
+    appIdRef.current.value = "";
+    applicationTypeRef.current.value = "";
   };
   return (
     <StyledForm
