@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import Table from "../table/table";
+import { useContext } from "react";
+import { SortContext } from "../../context/sort";
 
 const IndexList = styled.div`
   height: 5vh;
@@ -30,11 +32,21 @@ const Index = styled.div`
 `;
 
 const Main = (props) => {
+  const sortConext = useContext(SortContext);
   const indexRef = useRef();
   const [results, setResults] = useState([]);
   let [filteredResults, setFilteredResults] = useState([]);
   let [dataLength, setDataLength] = useState(0);
   let [data, setData] = useState([]);
+
+  const sortResults = () => {
+    console.log(sortConext.sort);
+    setFilteredResults(
+      filteredResults.sort((a, b) => {
+        return a[sortConext.sort] - b[sortConext.sort];
+      })
+    );
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,18 +57,12 @@ const Main = (props) => {
     };
     fetchData();
   }, []);
-  const sortResults = (sortParam) => {
-    setFilteredResults(
-      filteredResults.sort((a, b) => {
-        return b[sortParam] - a[sortParam];
-      })
-    );
-  };
+
   useEffect(() => {
     let res = filteredResults;
     if (Object.keys(props.applyFilter).length) {
       for (const item in props.applyFilter) {
-        if (item == "startDate" || item == "endData") continue;
+        if (item == "startDate" || item == "endDate") continue;
         res = res.filter((ele) => {
           return `${ele[item]}`.includes(props.applyFilter[item]);
         });
@@ -73,7 +79,7 @@ const Main = (props) => {
           let date = new Date(ele.creationTimestamp.slice(0, 10));
           console.log(startDate, "start");
           console.log(date, "date");
-          return startDate >= date && endDate <= date;
+          return startDate >= date && date <= endDate;
         });
       } else if (startDate) {
         console.log("CASE2");

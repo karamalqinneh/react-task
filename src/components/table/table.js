@@ -1,6 +1,7 @@
 import Table from "react-bootstrap/Table";
 import styled from "styled-components";
-import { useReducer } from "react";
+import { useContext } from "react";
+import { SortContext } from "../../context/sort";
 
 const Td = styled.td``;
 const Sort = styled.div`
@@ -35,7 +36,8 @@ const reducer = (state, action) => {
   }
 };
 const ResultsTable = (props) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const sortConext = useContext(SortContext);
+  // const [state, dispatch] = useReducer(reducer, initialState);
   let rows = props.data.map((ele) => {
     return (
       <tr key={ele.logId}>
@@ -57,8 +59,8 @@ const ResultsTable = (props) => {
             <Name>LOG ID</Name>
             <Sort
               onClick={() => {
-                dispatch("logId");
-                props.sortResults(state);
+                sortConext.setSort("logId");
+                props.sortResults();
               }}
             >
               S
@@ -68,8 +70,8 @@ const ResultsTable = (props) => {
             <Name>Application Type</Name>
             <Sort
               onClick={() => {
-                dispatch("applicationType");
-                props.sortResults(state);
+                sortConext.setSort("applicationType");
+                props.sortResults();
               }}
             >
               S
@@ -79,8 +81,8 @@ const ResultsTable = (props) => {
             <Name>Application ID</Name>
             <Sort
               onClick={() => {
-                dispatch("appId");
-                props.sortResults(state);
+                sortConext.setSort("applicationId");
+                props.sortResults();
               }}
             >
               S
@@ -90,8 +92,8 @@ const ResultsTable = (props) => {
             <Name>Action</Name>
             <Sort
               onClick={() => {
-                dispatch("actionType");
-                props.sortResults(state);
+                sortConext.setSort("actionType");
+                props.sortResults();
               }}
             >
               S
@@ -101,8 +103,8 @@ const ResultsTable = (props) => {
             <Name>Action Details</Name>
             <Sort
               onClick={() => {
-                dispatch("logId");
-                props.sortResults(state);
+                sortConext.setSort("logId");
+                props.sortResults();
               }}
             >
               S
@@ -112,8 +114,8 @@ const ResultsTable = (props) => {
             <Name>Date Time </Name>
             <Sort
               onClick={() => {
-                dispatch("creationTimestamp");
-                props.sortResults(state);
+                sortConext.setSort("creationTimestamp");
+                props.sortResults();
               }}
             >
               S

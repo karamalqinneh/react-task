@@ -40,7 +40,7 @@ const FilterForm = (props) => {
       startDate: startDateRef.current.value,
       endDate: endDateRef.current.value,
       actionType: actionTypeRef.current.value,
-      appIdRef: appIdRef.current.value,
+      applicationId: appIdRef.current.value,
       applicationType: applicationTypeRef.current.value,
     };
 
