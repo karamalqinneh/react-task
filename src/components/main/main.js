@@ -56,7 +56,7 @@ const Main = (props) => {
       setDataLength(response.data.result.auditLog.length);
     };
     fetchData();
-  }, []);
+  }, [sortConext.reset]);
 
   useEffect(() => {
     let res = filteredResults;

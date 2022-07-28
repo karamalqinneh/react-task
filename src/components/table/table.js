@@ -17,27 +17,8 @@ const Sort = styled.div`
 
 const Name = styled.div``;
 
-const initialState = "";
-
-const reducer = (state, action) => {
-  switch (action) {
-    case "logId":
-      return "logId";
-    case "applicationType":
-      return "applicationType";
-    case "creationTimestamp":
-      return "creationTimestamp";
-    case "actionType":
-      return "actionType";
-    case "appId":
-      return "applicationId";
-    default:
-      return initialState;
-  }
-};
 const ResultsTable = (props) => {
   const sortConext = useContext(SortContext);
-  // const [state, dispatch] = useReducer(reducer, initialState);
   let rows = props.data.map((ele) => {
     return (
       <tr key={ele.logId}>

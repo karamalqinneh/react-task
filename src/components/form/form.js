@@ -1,8 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styled from "styled-components";
-import { useRef, useState } from "react";
-import { propTypes } from "react-bootstrap/esm/Image";
+import { useRef, useState, useContext } from "react";
+import { SortContext } from "../../context/sort";
 
 const StyledForm = styled(Form)`
   width: 90vw;
@@ -12,7 +12,7 @@ const StyledForm = styled(Form)`
 `;
 
 const Group = styled(Form.Group)`
-  width: calc(100vw / 8);
+  width: calc(100vw / 10);
   height: 12.5vh;
   display: flex;
   flex-direction: column;
@@ -20,12 +20,13 @@ const Group = styled(Form.Group)`
 `;
 
 const StyledButton = styled(Button)`
-  width: calc(100vw / 8);
+  width: calc(100vw / 10);
   height: 6vh;
   margin: auto 0;
 `;
 
 const FilterForm = (props) => {
+  const sortContext = useContext(SortContext);
   const employeeNameRef = useRef();
   const applicationTypeRef = useRef();
   const startDateRef = useRef();
@@ -45,12 +46,16 @@ const FilterForm = (props) => {
     };
 
     props.getData(output);
+  };
+
+  const clearParams = () => {
     employeeNameRef.current.value = "";
     startDateRef.current.value = "";
     endDateRef.current.value = "";
     actionTypeRef.current.value = "";
     appIdRef.current.value = "";
     applicationTypeRef.current.value = "";
+    sortContext.setReset(!sortContext.reset);
   };
   return (
     <StyledForm
@@ -70,7 +75,7 @@ const FilterForm = (props) => {
         <Form.Label>Action Type</Form.Label>
         <Form.Control type="text" ref={actionTypeRef} />
       </Group>
-      <Group className="mb-3">
+      <Group className="mb-3" style={{ width: "15vw" }}>
         <Form.Label>Application type</Form.Label>
         <Form.Control type="text" ref={applicationTypeRef} />
       </Group>
@@ -89,6 +94,9 @@ const FilterForm = (props) => {
       </Group>
       <StyledButton variant="primary" type="submit">
         Submit
+      </StyledButton>
+      <StyledButton variant="secondary" onClick={clearParams}>
+        Clear
       </StyledButton>
     </StyledForm>
   );
